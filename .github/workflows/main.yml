@@ -20,10 +20,10 @@ jobs:
     steps:
         # Checks-out your repository under $GITHUB_WORKSPACE, so job can access it and uses the Node setup
         - uses: actions/checkout@v2
-        - name: Use Nodejs 12.x
+        - name: Use Nodejs 16.x
           uses: actions/setup-node@v1
           with:
-            node-version: "12.x"
+            node-version: "16.x"
         # Install the CLI from NPM
         - name: Install the TestEngine-CLI
           run: | 
@@ -42,10 +42,10 @@ jobs:
     steps:
           # Checks-out your repository under $GITHUB_WORKSPACE, so job can access it and uses the Node setup
           - uses: actions/checkout@v2
-          - name: Use Nodejs 12.x
+          - name: Use Nodejs 16.x
             uses: actions/setup-node@v1
             with:
-              node-version: "12.x"
+              node-version: "16.x"
           # Install the CLI from NPM
           - name: Install the TestEngine-CLI
             run: | 
