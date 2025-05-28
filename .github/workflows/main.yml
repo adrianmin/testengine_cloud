@@ -34,7 +34,7 @@ jobs:
             TE_PASS: ${{secrets.TESTENGINE_PASS}}
             TE_ADDR: ${{secrets.TESTENGINE_LOCATION}}
           run: |
-            testengine -u $TE_USER -p $TE_PASS -H $TE_ADDR run project tags=regression environment=Test ./
+            testengine -u $TE_USER -p $TE_PASS -H $TE_ADDR run project tags=regression environment=Test ./TestEngine-Project-readyapi-project.xml
 
 
   Run-New-Feature-Tests:
@@ -56,4 +56,4 @@ jobs:
               TE_PASS: ${{secrets.TESTENGINE_PASS}}
               TE_ADDR: ${{secrets.TESTENGINE_LOCATION}}
             run: |
-              testengine -u $TE_USER -p $TE_PASS -H $TE_ADDR run project tags=newFeature environment=Test ./
+              testengine -u $TE_USER -p $TE_PASS -H $TE_ADDR run project tags=newFeature environment=Test ./TestEngine-Project-readyapi-project.xml
