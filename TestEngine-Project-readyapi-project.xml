@@ -1,0 +1,895 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="08043a66-39e7-446c-853e-fdb3596c02b8" created="3.60.0" activeEnvironment="Default environment" encryptionMode="Not encrypted" name="TestEngine Project" projectVersion="" updated="3.60.0 2025-04-23T14:13:38Z" resourceRoot="" defaultScriptLanguage="Groovy" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="08043a66-39e7-446c-853e-fdb3596c02b8fileName">TestEngine-Project-readyapi-project</con:setting></con:settings><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:jmsConnectionContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:reporting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:xmlTemplates xsi:nil="true"/><con:parameters/></con:reporting><con:eventHandlers type="RequestFilter.filterRequest" name="RequestFilter.filterRequest"><con:script>// Sample event script to add custom HTTP header to all outgoing REST, SOAP and HTTP(S) calls
+// This code is often used for adding custom authentication to ReadyAPI functional tests
+
+// If hardcoding the token, uncomment and change line 5
+// token = '4567'
+
+// If your token is parameterized in Project level custom property, uncomment line 8
+// token = request.parent.testCase.testSuite.project.getProperty('auth_token').getValue()
+
+// To modify all outgoing calls, remove comments from lines 11 to 16
+// headers = request.requestHeaders
+// if (headers.containsKey('auth_token2') == false) {
+//   headers.put('auth_token2', token)
+//   request.requestHeaders = headers
+// }</con:script></con:eventHandlers><con:eventHandlers type="TestRunListener.afterStep" name="TestRunListener.afterStep"><con:script>// Save all test step results into files
+// Change the directory path in line 5 to a location where you want to store details
+// then uncomment lines 5 to 10
+
+// filePath = 'C:\\tempOutputDirectory\\'
+// fos = new java.io.FileOutputStream(filePath + testStepResult.testStep.label + '.txt', true)
+// pw = new java.io.PrintWriter(fos)
+// testStepResult.writeTo(pw)
+// pw.close()
+// fos.close()</con:script></con:eventHandlers><con:environment id="f2062a96-9535-41d6-bd45-9aa4b2eebe30" name="Test" index="0"><con:service type="REST" name="Ecommerce Store"><con:endpoint authProfile="No Authorization" proxyHost="" proxyPort="" proxyUsername="" proxyPassword="">http://virtserver.swaggerhub.com</con:endpoint></con:service><con:databaseConnectionContainer/><con:jmsConnectionContainer/></con:environment><con:authRepository/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>No Authorization</con:authProfile></con:entry></con:environmentSpec><con:tags><con:tag><con:id>fd4f42d9-c942-4272-97e0-ac466dd4cfa2</con:id><con:name>regression</con:name></con:tag><con:tag><con:id>d0cd5116-a707-4ebc-b02f-d2a3d8a46e9c</con:id><con:name>newFeature</con:name></con:tag></con:tags><con:interface xsi:type="con:RestService" id="edd81378-6502-49e8-99c2-51fa2300cf22" name="Ecommerce Store" type="rest_ex" wadlVersion="https://swagger.io/swagger2/specification" definitionUrl="C:\Users\adrian.minnock\OneDrive - SmartBear Software, Inc\API Definitions\Ecommerce Store.json" basePath="/Adrians_Org/ecommerce-store/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:description>## This is an API definition to be used in an automated design first workflow.
+   We will reuse this API definition to create our functional tests and a virtual API.
+</con:description><con:settings id="82acd646-3121-4927-95d7-f2a621cb93a9"><con:setting id="edd81378-6502-49e8-99c2-51fa2300cf22fileName">Ecommerce-Store</con:setting></con:settings><con:definitionCache type="TEXT" rootPart="file:/C:/Users/adrian.minnock/OneDrive%20-%20SmartBear%20Software,%20Inc/API%20Definitions/Ecommerce%20Store.json"><con:part><con:url>file:/C:/Users/adrian.minnock/OneDrive%20-%20SmartBear%20Software,%20Inc/API%20Definitions/Ecommerce%20Store.json</con:url><con:content>{
+  "swagger": "2.0",
+  "info": {
+    "description": "## This is an API definition to be used in an automated design first workflow.\n   We will reuse this API definition to create our functional tests and a virtual API.\n",
+    "version": "1.1.0",
+    "title": "Ecommerce Store",
+    "termsOfService": "http://smartbear.com",
+    "contact": {
+      "email": "adrian.minnock@smartbear.com"
+    },
+    "license": {
+      "name": "Private License",
+      "url": "http://smartbear.com"
+    },
+    "x-tag": "example2"
+  },
+  "host": "virtserver.swaggerhub.com",
+  "basePath": "/Adrians_Org/ecommerce-store/1.1.0",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Operations used to login, logout and get user details."
+    },
+    {
+      "name": "Orders",
+      "description": "Operations available to regular development, integration, test teams."
+    },
+    {
+      "name": "Payments",
+      "description": "Operations dependent on third party service."
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/login/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Login to user account",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "The user name for login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "basic": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/login"
+              }
+            }
+          },
+          "404": {
+            "description": "Page not found"
+          }
+        }
+      }
+    },
+    "/logout/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Logout current user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [],
+        "security": [
+          {
+            "basic": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/logout"
+              }
+            }
+          },
+          "404": {
+            "description": "Page not found"
+          }
+        }
+      }
+    },
+    "/user_details/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "View user details",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token used for authentication",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "basic": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/user_details"
+              }
+            }
+          },
+          "404": {
+            "description": "Page not found"
+          }
+        }
+      }
+    },
+    "/get_products/{product_id}/": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "description": "Get list of all products",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "description": "id number of product",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token used for authentication",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "basic": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/products"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid product ID"
+          },
+          "404": {
+            "description": "Page not found"
+          }
+        }
+      }
+    },
+    "/get_orders/{order_id}/": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "description": "Get list of all orders for the user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "description": "id number for each number",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token used for authentication",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "basic": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/get_orders"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid order ID"
+          },
+          "404": {
+            "description": "Page not found"
+          }
+        }
+      }
+    },
+    "/post_order/": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "description": "Creates a new order in DB",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "POSTDATA",
+            "description": "Details of new order",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/shoppingcart"
+              }
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token used for authentication",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "basic": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/post_orders"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid order details"
+          },
+          "404": {
+            "description": "Page not found"
+          }
+        }
+      }
+    },
+    "/payments/creditcard/": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "description": "External Service to make Creditcard payments",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "POSTDATA",
+            "description": "Creates a payment using a credit card",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/card_details"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token used for authentication",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "basic": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/payment"
+            }
+          },
+          "400": {
+            "description": "Invalid card details"
+          },
+          "404": {
+            "description": "Page not found"
+          }
+        }
+      }
+    },
+    "/payments/voucher/": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "description": "Creates a payment using voucher",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "POSTDAT",
+            "description": "Allows users to enter voucher code",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/voucher_details"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token used for authentication",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "basic": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/payment"
+            }
+          },
+          "400": {
+            "description": "Invalid voucher details"
+          },
+          "404": {
+            "description": "Page not found"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic"
+    }
+  },
+  "definitions": {
+    "payment": {
+      "type": "object",
+      "required": [
+        "Reason",
+        "Status",
+        "Status Code"
+      ],
+      "properties": {
+        "Status": {
+          "type": "string",
+          "example": "Transaction Approved",
+          "description": "Status of transaction"
+        },
+        "Reason": {
+          "type": "string",
+          "example": "Approved",
+          "description": "Status Readon"
+        },
+        "Status Code": {
+          "type": "integer",
+          "example": 100,
+          "description": "Status code for the tramsaction"
+        }
+      }
+    },
+    "shoppingcart": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "example": 1,
+          "description": "Product Quantity"
+        },
+        "product_id": {
+          "type": "integer",
+          "example": 1,
+          "description": "Product Id"
+        }
+      }
+    },
+    "products": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1,
+          "description": "Product id"
+        },
+        "name": {
+          "type": "string",
+          "example": "iPhone",
+          "description": "Product Name"
+        },
+        "description": {
+          "type": "string",
+          "example": "This is an iphone 8",
+          "description": "Product Description"
+        },
+        "image": {
+          "type": "string",
+          "example": "iphone.jpg",
+          "description": "Product Image"
+        },
+        "price": {
+          "type": "number",
+          "example": 799,
+          "description": "Price of the product"
+        },
+        "created": {
+          "type": "string",
+          "example": "August",
+          "description": "Date time of creation"
+        },
+        "modified": {
+          "type": "string",
+          "example": "September",
+          "description": "Date time of creation"
+        },
+        "status": {
+          "type": "integer",
+          "example": "1 or 0",
+          "description": "Status of the user"
+        }
+      }
+    },
+    "login": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Login successful",
+          "description": "Login message"
+        },
+        "name": {
+          "type": "string",
+          "example": "John",
+          "description": "Users first name"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Smith",
+          "description": "Users last name"
+        },
+        "auth_token": {
+          "type": "string",
+          "example": "Bearer 12345689123456789",
+          "description": "Authorization token used for requests"
+        }
+      }
+    },
+    "logout": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Logout successful",
+          "description": "Logout message"
+        },
+        "status": {
+          "type": "integer",
+          "example": 1,
+          "description": "login status of user"
+        }
+      }
+    },
+    "user_details": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1,
+          "description": "User id"
+        },
+        "name": {
+          "type": "string",
+          "example": "John",
+          "description": "Users first name"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Smith",
+          "description": "Users last name"
+        },
+        "email": {
+          "type": "string",
+          "example": "john.smith@example.com",
+          "description": "Users email"
+        },
+        "phone": {
+          "type": "integer",
+          "example": 871234567,
+          "description": "users phone number"
+        },
+        "address": {
+          "type": "string",
+          "example": "Galway, Ireland",
+          "description": "Users address"
+        }
+      }
+    },
+    "get_orders": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "integer",
+          "example": 1,
+          "description": "Order's ID"
+        },
+        "customer_id": {
+          "type": "integer",
+          "example": 1,
+          "description": "Customer ID"
+        },
+        "total_price": {
+          "type": "number",
+          "example": 799,
+          "description": "Total Order Price"
+        },
+        "status": {
+          "type": "integer",
+          "example": 0,
+          "description": "Status of the order for internal use."
+        },
+        "items": {
+          "type": "integer",
+          "example": 1,
+          "description": "Quantity"
+        },
+        "image": {
+          "type": "string",
+          "example": "iphone.jpeg",
+          "description": "Image of the product"
+        },
+        "paymenttype": {
+          "type": "string",
+          "example": "card",
+          "description": "Order payment method"
+        }
+      }
+    },
+    "post_orders": {
+      "type": "object",
+      "properties": {
+        "Order ID": {
+          "type": "integer",
+          "example": 298,
+          "description": "Order ID"
+        },
+        "Order Item ID": {
+          "type": "integer",
+          "example": 643,
+          "description": "Product Id"
+        },
+        "Item Total Price": {
+          "type": "number",
+          "example": 1998,
+          "description": "Total price of item"
+        },
+        "Total Order Price": {
+          "type": "number",
+          "example": 3996,
+          "description": "Total price of the order"
+        }
+      }
+    },
+    "voucher_details": {
+      "type": "object",
+      "properties": {
+        "voucer_code": {
+          "type": "integer",
+          "example": 33,
+          "description": "Order ID"
+        },
+        "purchase_date": {
+          "type": "string",
+          "example": "January 2020",
+          "description": "Date voucher was purchased"
+        },
+        "expiry_date": {
+          "type": "string",
+          "example": "December 2020",
+          "description": "Expiry date of voucher"
+        }
+      }
+    },
+    "card_details": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 33,
+          "description": "Order ID"
+        },
+        "action": {
+          "type": "string",
+          "example": "placeOrdercc",
+          "description": "placeOrdercc"
+        },
+        "cc_money": {
+          "type": "number",
+          "example": 798,
+          "description": "Order amount"
+        },
+        "cc_name": {
+          "type": "string",
+          "example": "S S",
+          "description": "Cardholders name"
+        },
+        "cc_number": {
+          "type": "integer",
+          "example": 9234123412341234,
+          "description": "cc number"
+        },
+        "cc_exp_mo": {
+          "type": "integer",
+          "example": 1,
+          "description": "cc expiry month"
+        },
+        "cc_exp_yr": {
+          "type": "integer",
+          "example": 2018,
+          "description": "cc expiry year"
+        },
+        "cc_cvv": {
+          "type": "integer",
+          "example": 123,
+          "description": "cc expiry year"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "pathParam": {
+      "name": "type",
+      "in": "path",
+      "description": "json or xml",
+      "required": true,
+      "type": "string"
+    }
+  }
+}</con:content><con:type>https://swagger.io/swagger2/specification</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:endpoint>https://virtserver.swaggerhub.com</con:endpoint></con:endpoints><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec><con:resource name="/get_orders/{order_id}/" path="/get_orders/{order_id}/" id="ae0fe37d-f6ca-4d9e-b2e4-8320904dbb46"><con:settings><con:setting id="ae0fe37d-f6ca-4d9e-b2e4-8320904dbb46fileName">%2Fget_orders%2F%7Border_id%7D%2F</con:setting></con:settings><con:parameters><con:parameter required="true"><con:name>order_id</con:name><con:style>TEMPLATE</con:style><con:description>id number for each number</con:description></con:parameter></con:parameters><con:method name="GET" id="9def78c0-4705-4b4b-9238-838887a6e2a4" method="GET"><con:description>Get list of all orders for the user&#13;
+</con:description><con:settings/><con:parameters><con:parameter required="true"><con:name>Authorization</con:name><con:style>HEADER</con:style><con:description>Token used for authentication</con:description></con:parameter></con:parameters><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent>[ {&#13;
+  "order_id" : 1,&#13;
+  "customer_id" : 1,&#13;
+  "total_price" : 799.0,&#13;
+  "status" : 0,&#13;
+  "items" : 1,&#13;
+  "image" : "iphone.jpeg",&#13;
+  "paymenttype" : "card"&#13;
+} ]</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent><![CDATA[<object>
+   <AnonymousModel>
+      <order_id>1</order_id>
+      <customer_id>1</customer_id>
+      <total_price>799.0</total_price>
+      <status>0</status>
+      <items>1</items>
+      <image>iphone.jpeg</image>
+      <paymenttype>card</paymenttype>
+   </AnonymousModel>
+</object>]]></con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>400</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>400</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:request name="Request 1" id="236e58bc-bac6-443c-a55e-ade607750de8" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:request><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:method><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:resource><con:resource name="/get_products/{product_id}/" path="/get_products/{product_id}/" id="4628c7c3-2e33-4c41-a000-c598c2528643"><con:settings><con:setting id="4628c7c3-2e33-4c41-a000-c598c2528643fileName">%2Fget_products%2F%7Bproduct_id%7D%2F</con:setting></con:settings><con:parameters><con:parameter required="true"><con:name>product_id</con:name><con:style>TEMPLATE</con:style><con:dataType>integer</con:dataType><con:description>id number of product</con:description></con:parameter></con:parameters><con:method name="GET" id="15c81b39-cfbb-4ec0-a269-1b4c3ee960e1" method="GET"><con:description>Get list of all products&#13;
+</con:description><con:settings/><con:parameters><con:parameter required="true"><con:name>Authorization</con:name><con:style>HEADER</con:style><con:description>Token used for authentication</con:description></con:parameter></con:parameters><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent>[ {&#13;
+  "id" : 1,&#13;
+  "name" : "iPhone",&#13;
+  "description" : "This is an iphone 8",&#13;
+  "image" : "iphone.jpg",&#13;
+  "price" : 799.0,&#13;
+  "created" : "August",&#13;
+  "modified" : "September",&#13;
+  "status" : 0&#13;
+} ]</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent><![CDATA[<object>
+   <AnonymousModel>
+      <id>1</id>
+      <name>iPhone</name>
+      <description>This is an iphone 8</description>
+      <image>iphone.jpg</image>
+      <price>799.0</price>
+      <created>August</created>
+      <modified>September</modified>
+      <status>0</status>
+   </AnonymousModel>
+</object>]]></con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>400</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>400</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:request name="Request 1" id="7c2368cd-ee0d-4d81-81e0-bd580f3659cc" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:request><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:method><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:resource><con:resource name="/login/" path="/login/" id="00143938-bd26-4c63-bd1a-55133d198a90"><con:settings><con:setting id="00143938-bd26-4c63-bd1a-55133d198a90fileName">%2Flogin%2F</con:setting></con:settings><con:parameters/><con:method name="GET" id="92efba69-e4bc-47fb-b59c-de6a83c24e76" method="GET"><con:description>Login to user account&#13;
+</con:description><con:settings/><con:parameters><con:parameter required="true"><con:name>username</con:name><con:style>QUERY</con:style><con:description>The user name for login</con:description></con:parameter><con:parameter required="true"><con:name>password</con:name><con:style>QUERY</con:style><con:description>The password for login in clear text</con:description></con:parameter></con:parameters><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent>[ {&#13;
+  "message" : "Login successful",&#13;
+  "name" : "John",&#13;
+  "last_name" : "Smith",&#13;
+  "auth_token" : "Bearer 12345689123456789"&#13;
+} ]</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent><![CDATA[<object>
+   <AnonymousModel>
+      <message>Login successful</message>
+      <name>John</name>
+      <last_name>Smith</last_name>
+      <auth_token>Bearer 12345689123456789</auth_token>
+   </AnonymousModel>
+</object>]]></con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:request name="Request 1" id="8a38b905-9802-4a3a-a438-dbb2d684e2d3" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:request><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:method><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:resource><con:resource name="/logout/" path="/logout/" id="1ac0e885-36b4-4c64-bfbe-0283f476a1be"><con:settings><con:setting id="1ac0e885-36b4-4c64-bfbe-0283f476a1befileName">%2Flogout%2F</con:setting></con:settings><con:parameters/><con:method name="GET" id="baa55547-0ae0-4489-9b84-0d6d32314273" method="GET"><con:description>Logout current user&#13;
+</con:description><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent>[ {&#13;
+  "message" : "Logout successful",&#13;
+  "status" : 1&#13;
+} ]</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent><![CDATA[<object>
+   <AnonymousModel>
+      <message>Logout successful</message>
+      <status>1</status>
+   </AnonymousModel>
+</object>]]></con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:request name="Request 1" id="b2df999d-4483-4078-89c4-e73f83f12092" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:request><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:method><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:resource><con:resource name="/payments/creditcard/" path="/payments/creditcard/" id="5ca6d1da-40a3-452e-bcaa-4fb3dbe06600"><con:settings><con:setting id="5ca6d1da-40a3-452e-bcaa-4fb3dbe06600fileName">%2Fpayments%2Fcreditcard%2F</con:setting></con:settings><con:parameters/><con:method name="POST" id="adb8bfeb-1876-492e-a88b-86e33666ab26" method="POST"><con:description>External Service to make Creditcard payments&#13;
+</con:description><con:settings/><con:parameters><con:parameter required="true"><con:name>Authorization</con:name><con:style>HEADER</con:style><con:description>Token used for authentication</con:description></con:parameter></con:parameters><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/><con:sampleContent>{&#13;
+  "id" : 33,&#13;
+  "action" : "placeOrdercc",&#13;
+  "cc_money" : 798.0,&#13;
+  "cc_name" : "S S",&#13;
+  "cc_number" : 0,&#13;
+  "cc_exp_mo" : 1,&#13;
+  "cc_exp_yr" : 2018,&#13;
+  "cc_cvv" : 123&#13;
+}</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent>{&#13;
+  "Status" : "Transaction Approved",&#13;
+  "Reason" : "Approved",&#13;
+  "Status Code" : 100&#13;
+}</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>400</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:request name="Request 1" id="56e055fb-dc16-4781-b93c-565751965944" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:request>{\r
+  "id" : 33,\r
+  "action" : "placeOrdercc",\r
+  "cc_money" : 798.0,\r
+  "cc_name" : "S S",\r
+  "cc_number" : 0,\r
+  "cc_exp_mo" : 1,\r
+  "cc_exp_yr" : 2018,\r
+  "cc_cvv" : 123\r
+}</con:request><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:parameterOrder><con:entry>Authorization</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:request><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:method><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:resource><con:resource name="/payments/voucher/" path="/payments/voucher/" id="3a2a2793-e3c4-4a39-9502-a52fdb3fd02a"><con:settings><con:setting id="3a2a2793-e3c4-4a39-9502-a52fdb3fd02afileName">%2Fpayments%2Fvoucher%2F</con:setting></con:settings><con:parameters/><con:method name="POST" id="bda0103d-8d83-466e-ac3c-709e4ce990d6" method="POST"><con:description>Creates a payment using voucher&#13;
+</con:description><con:settings/><con:parameters><con:parameter required="true"><con:name>Authorization</con:name><con:style>HEADER</con:style><con:description>Token used for authentication</con:description></con:parameter></con:parameters><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/><con:sampleContent>{&#13;
+  "voucer_code" : 33,&#13;
+  "purchase_date" : "January 2020",&#13;
+  "expiry_date" : "December 2020"&#13;
+}</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent>{&#13;
+  "Status" : "Transaction Approved",&#13;
+  "Reason" : "Approved",&#13;
+  "Status Code" : 100&#13;
+}</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>400</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:request name="Request 1" id="9de225a7-3403-4c18-a383-a3074a03d27e" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:request>{\r
+  "voucer_code" : 33,\r
+  "purchase_date" : "January 2020",\r
+  "expiry_date" : "December 2020"\r
+}</con:request><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:parameterOrder><con:entry>Authorization</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:request><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:method><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:resource><con:resource name="/post_order/" path="/post_order/" id="ff96d396-6828-41f0-bc34-364fc73d8072"><con:settings><con:setting id="ff96d396-6828-41f0-bc34-364fc73d8072fileName">%2Fpost_order%2F</con:setting></con:settings><con:parameters/><con:method name="POST" id="52823845-1b26-44b0-8a47-a866d2c44195" method="POST"><con:description>Creates a new order in DB&#13;
+</con:description><con:settings/><con:parameters><con:parameter required="true"><con:name>Authorization</con:name><con:style>HEADER</con:style><con:description>Token used for authentication</con:description></con:parameter></con:parameters><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/><con:sampleContent>{ }</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent>[ {&#13;
+  "Order ID" : 298,&#13;
+  "Order Item ID" : 643,&#13;
+  "Item Total Price" : 1998.0,&#13;
+  "Total Order Price" : 3996.0&#13;
+} ]</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>400</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>400</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:request name="Request 1" id="628c7403-5920-4207-b693-e1e4c022d0b6" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:request>{ }</con:request><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:parameterOrder><con:entry>Authorization</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:request><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:method><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:resource><con:resource name="/user_details/" path="/user_details/" id="75e7f2b6-f2fd-41d2-9863-5defacd49d7f"><con:settings><con:setting id="75e7f2b6-f2fd-41d2-9863-5defacd49d7ffileName">%2Fuser_details%2F</con:setting></con:settings><con:parameters/><con:method name="GET" id="d0d54da5-67b0-49f8-9f98-2b31c7bf887c" method="GET"><con:description>View user details&#13;
+</con:description><con:settings/><con:parameters><con:parameter required="true"><con:name>Authorization</con:name><con:style>HEADER</con:style><con:description>Token used for authentication</con:description></con:parameter></con:parameters><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent>[ {&#13;
+  "id" : 1,&#13;
+  "name" : "John",&#13;
+  "last_name" : "Smith",&#13;
+  "email" : "john.smith@example.com",&#13;
+  "phone" : 871234567,&#13;
+  "address" : "Galway, Ireland"&#13;
+} ]</con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>200</con:status><con:params/><con:sampleContent><![CDATA[<object>
+   <AnonymousModel>
+      <id>1</id>
+      <name>John</name>
+      <last_name>Smith</last_name>
+      <email>john.smith@example.com</email>
+      <phone>871234567</phone>
+      <address>Galway, Ireland</address>
+   </AnonymousModel>
+</object>]]></con:sampleContent></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>404</con:status><con:params/></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:request name="Request 1" id="aca43a48-44df-42a6-80c9-c916e2da0799" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:request><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:method><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:resource></con:interface><con:testSuite id="99877afe-0746-41f0-aea3-a1300a033f57" name="TestSuite"><con:settings id="a6e0b813-65b1-464c-a6ef-1d738c2fef26"><con:setting id="99877afe-0746-41f0-aea3-a1300a033f57fileName">TestSuite</con:setting></con:settings><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec><con:testCase id="f57bfd1a-a8a0-4dd0-b0ef-f63003ca6800" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="Login_TestCase" searchProperties="true" timeout="0"><con:settings><con:setting id="f57bfd1a-a8a0-4dd0-b0ef-f63003ca6800fileName">Login_TestCase</con:setting></con:settings><con:testStep type="restrequest" name="GET Request" id="9c833d87-6c0c-4120-bcd5-bdf5c28e4337"><con:settings/><con:config service="Ecommerce Store" resourcePath="/Adrians_Org/ecommerce-store/1.1.0/login/" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GET Request" id="8a38b905-9802-4a3a-a438-dbb2d684e2d3" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="abd63b03-a694-4dcf-bff8-601a112dcd3f" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" id="cb36219d-f540-4d41-a315-0b3cd500373a" name="Response SLA"><con:configuration><SLA>250</SLA></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:properties/><con:reportParameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec><con:tagId>fd4f42d9-c942-4272-97e0-ac466dd4cfa2</con:tagId></con:testCase><con:testCase id="f88bd208-04a2-49f8-b4de-b06474696d5e" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="Logout_TestCase" searchProperties="true" timeout="0"><con:settings><con:setting id="f88bd208-04a2-49f8-b4de-b06474696d5efileName">Logout_TestCase</con:setting></con:settings><con:testStep type="restrequest" name="GET Request" id="fa592ebb-2623-4ef0-949c-6f36f5a9e218"><con:settings/><con:config service="Ecommerce Store" resourcePath="/Adrians_Org/ecommerce-store/1.1.0/logout/" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GET Request" id="b2df999d-4483-4078-89c4-e73f83f12092" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="c3c2a4c9-163d-4de9-a9de-79f9d5207b93" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" id="c0337f98-a16d-4b6b-b664-e8ad42b804e1" name="Response SLA"><con:configuration><SLA>250</SLA></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:properties/><con:reportParameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec><con:tagId>fd4f42d9-c942-4272-97e0-ac466dd4cfa2</con:tagId></con:testCase><con:testCase id="b71bae00-4ac5-49e6-9241-2248463fd8f9" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="UserDetails_TestCase" searchProperties="true" timeout="0"><con:settings><con:setting id="b71bae00-4ac5-49e6-9241-2248463fd8f9fileName">UserDetails_TestCase</con:setting></con:settings><con:testStep type="restrequest" name="GET Request" id="191af4cb-2c1a-4b2f-ae93-3e4b9329472c"><con:settings/><con:config service="Ecommerce Store" resourcePath="/Adrians_Org/ecommerce-store/1.1.0/user_details/" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GET Request" id="aca43a48-44df-42a6-80c9-c916e2da0799" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="84be9234-54a1-47bf-939c-40ce01a859e7" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" id="4093f3aa-505f-494d-bfed-622ef9302f6d" name="Response SLA"><con:configuration><SLA>250</SLA></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:properties/><con:reportParameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec><con:tagId>fd4f42d9-c942-4272-97e0-ac466dd4cfa2</con:tagId></con:testCase><con:testCase id="a444be4f-456b-4a72-8dbe-8ba9bdc76909" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="ProductID_TestCase" searchProperties="true" timeout="0"><con:settings><con:setting id="a444be4f-456b-4a72-8dbe-8ba9bdc76909fileName">ProductID_TestCase</con:setting></con:settings><con:testStep type="restrequest" name="GET Request" id="786a8af5-c384-486a-8f33-5bc2ff8ee303"><con:settings/><con:config service="Ecommerce Store" resourcePath="/Adrians_Org/ecommerce-store/1.1.0/get_products/{product_id}/" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GET Request" id="7c2368cd-ee0d-4d81-81e0-bd580f3659cc" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="2fae1570-a110-4223-b795-70a523e75909" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" id="4e9aa6d9-18d3-41e3-8a23-aa3103575103" name="Response SLA"><con:configuration><SLA>250</SLA></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:properties/><con:reportParameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec><con:tagId>d0cd5116-a707-4ebc-b02f-d2a3d8a46e9c</con:tagId></con:testCase><con:testCase id="179d2bec-36bb-41bc-9032-91819c0463e1" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="OrderID_TestCase" searchProperties="true" timeout="0"><con:settings><con:setting id="179d2bec-36bb-41bc-9032-91819c0463e1fileName">OrderID_TestCase</con:setting></con:settings><con:testStep type="restrequest" name="GET Request" id="91865b60-6d3a-4a69-91f0-cdc2a29779fb"><con:settings/><con:config service="Ecommerce Store" resourcePath="/Adrians_Org/ecommerce-store/1.1.0/get_orders/{order_id}/" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GET Request" id="236e58bc-bac6-443c-a55e-ade607750de8" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="c964ba78-502c-4366-8fd3-c1de93bb07e5" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" id="f6d522a8-de70-481d-adae-f9cb35d23a8b" name="Response SLA"><con:configuration><SLA>250</SLA></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:properties/><con:reportParameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec><con:tagId>d0cd5116-a707-4ebc-b02f-d2a3d8a46e9c</con:tagId></con:testCase><con:testCase id="8258c27b-7576-4cfa-b7b1-095f97b66270" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="PostOrders_TestCase" searchProperties="true" timeout="0"><con:settings><con:setting id="8258c27b-7576-4cfa-b7b1-095f97b66270fileName">PostOrders_TestCase</con:setting></con:settings><con:testStep type="restrequest" name="POST Request" id="2a9a5fa3-48b2-4ca4-bc6d-2339d53ebeef"><con:settings/><con:config service="Ecommerce Store" resourcePath="/Adrians_Org/ecommerce-store/1.1.0/post_order/" methodName="POST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="POST Request" id="628c7403-5920-4207-b693-e1e4c022d0b6" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:request>{ }</con:request><con:assertion type="Valid HTTP Status Codes" id="32cb3566-a1a2-440f-86f1-4853b03b1eaf" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" id="f2a54193-f353-4d2d-b48a-7ea9dd67589f" name="Response SLA"><con:configuration><SLA>250</SLA></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:parameterOrder><con:entry>Authorization</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:properties/><con:reportParameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec><con:tagId>fd4f42d9-c942-4272-97e0-ac466dd4cfa2</con:tagId></con:testCase><con:testCase id="48ae1108-73be-4659-b4c1-927feef1d313" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="Payments_TestCase" searchProperties="true" timeout="0"><con:settings><con:setting id="48ae1108-73be-4659-b4c1-927feef1d313fileName">Payments_TestCase</con:setting></con:settings><con:testStep type="restrequest" name="POST Request" id="9fcb1d45-dbe5-4ab2-acb1-1ba33f7713f6"><con:settings/><con:config service="Ecommerce Store" resourcePath="/Adrians_Org/ecommerce-store/1.1.0/payments/creditcard/" methodName="POST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="POST Request" id="56e055fb-dc16-4781-b93c-565751965944" mediaType="application/json"><con:settings/><con:endpoint>http://virtserver.swaggerhub.com</con:endpoint><con:request>{\r
+  "id" : 33,\r
+  "action" : "placeOrdercc",\r
+  "cc_money" : 798.0,\r
+  "cc_name" : "S S",\r
+  "cc_number" : 0,\r
+  "cc_exp_mo" : 1,\r
+  "cc_exp_yr" : 2018,\r
+  "cc_cvv" : 123\r
+}</con:request><con:assertion type="Valid HTTP Status Codes" id="07829844-b323-4984-b0a6-8e354e017d93" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" id="3bb920eb-ba24-4e38-b865-3bd093d8083c" name="Response SLA"><con:configuration><SLA>250</SLA></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:parameters/><con:parameterOrder><con:entry>Authorization</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:properties/><con:reportParameters/><con:environmentSpec><con:entry environmentId="f2062a96-9535-41d6-bd45-9aa4b2eebe30"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec><con:tagId>fd4f42d9-c942-4272-97e0-ac466dd4cfa2</con:tagId></con:testCase></con:testSuite></con:soapui-project>
